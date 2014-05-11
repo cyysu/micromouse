@@ -10,6 +10,7 @@
 #define BACK_SENSOR sensorVal[6]
 #define FRONT_SENSOR sensorVal[0]
 #define SENSOR_HIGH 800                                                /*determine this value*/
+#define MAPSIZE 16
 
 extern volatile int encoder0, encoder5, encoder6, encoder7;
 
@@ -23,9 +24,8 @@ char TO_CENTER = 1;
 char TO_START = 0;
 
 //Map
-const char mapSize = 16;
 char center = 8;
-struct Node maze[mapSize][mapSize];
+struct Node maze[MAPSIZE][MAPSIZE];
 
 // Distance
 // Ignore times due to having encoder.
@@ -50,8 +50,8 @@ int main() {
 
   int oldDist;
 
-  for(int i=0; i<mapSize; i++) {
-    for(int j=0; j<mapSize; j++) {
+  for(int i=0; i<MAPSIZE; i++) {
+    for(int j=0; j<MAPSIZE; j++) {
       // reference all the costs with respect to center.
       maze[i][j].cost = min_dist(i,j);
       maze[i][j].walls = 0;
@@ -77,8 +77,8 @@ int main() {
       progTime = 0;
       TO_START = 1;
       TO_CENTER = 0;
-      for(int i=0; i<mapSize; i++) {
-        for(int j=0; j<mapSize; j++){
+      for(int i=0; i<MAPSIZE; i++) {
+        for(int j=0; j<MAPSIZE; j++){
           // only need absolute distance from the center
           maze[i][j].cost = abs(i+j);
         }
@@ -90,8 +90,8 @@ int main() {
       progTime = 0;
       TO_START = 0;
       TO_CENTER = 1;
-      for(int i=0; i < mapSize; i++) {
-        for(int j=0; j < mapSize; j++) {
+      for(int i=0; i < MAPSIZE; i++) {
+        for(int j=0; j < MAPSIZE; j++) {
           maze[i][j].cost = min_dist(i,j);
         }
       }
@@ -141,21 +141,21 @@ void updateCosts() {
   char check = 1;
   while(check) {
     check = 0;
-    for(int i=0; i<mapSize; i++) {
-      for(int j=0; j<mapSize; j++) {
+    for(int i=0; i<MAPSIZE; i++) {
+      for(int j=0; j<MAPSIZE; j++) {
         // Initialize to impossible value.
         int neighbors[4] = {-1,-1,-1,-1};
         // Initialize to impossible value. The cost can only be at max as
         // tempCost - 1.
-        int tempCost = mapSize*mapSize;
+        int tempCost = MAPSIZE*MAPSIZE;
         char walls = maze[i][j].walls;
         if(!(walls && NORTH) && i-1 >= 0){
           neighbors[NORTH] = maze[i-1][j].cost;
         }
-        if(!(walls && EAST) && j+1 < mapSize) {
+        if(!(walls && EAST) && j+1 < MAPSIZE) {
           neighbors[EAST] = maze[i][j+1].cost;
         }
-        if(!(walls && SOUTH) && i+1 < mapSize) {
+        if(!(walls && SOUTH) && i+1 < MAPSIZE) {
           neighbors[SOUTH] = maze[i+1][j].cost;
         }
         if(!(walls && WEST) && j-1 >= 0) {
@@ -169,7 +169,7 @@ void updateCosts() {
         }
         // If you're going to the center.
         if(TO_CENTER) {
-          if(tempCost >= maze[i][j].cost && !inCenter(i,j) && tempCost != mapSize*mapSize) {
+          if(tempCost >= maze[i][j].cost && !inCenter(i,j) && tempCost != MAPSIZE*MAPSIZE) {
             // Serial.println("Changing Node Cost");
             maze[i][j].cost = tempCost + 1;
             // To escape the function.
@@ -178,7 +178,7 @@ void updateCosts() {
         }
         // If you're heading back to the start.
         else if(TO_START) {
-          if(tempCost >= maze[i][j].cost && !(i == 0 && j == 0) && tempCost != mapSize*mapSize) {
+          if(tempCost >= maze[i][j].cost && !(i == 0 && j == 0) && tempCost != MAPSIZE*MAPSIZE) {
             maze[i][j].cost = tempCost + 1;
             // To escape the function.
             check = 1;
@@ -192,18 +192,18 @@ void updateCosts() {
 // The lowest cost square is determined by using wall data for the current square.
 void getNextDirection() {
   char walls = maze[curNodeY][curNodeX].walls;
-  // set it to Mapsize * map size
+  // set it to MAPSIZE * map size
   int tempCost = 1000;
   past_dir = next_dir;
   if(!(walls && 0) && curNodeY > 0) {
     next_dir = NORTH;
     tempCost = maze[curNodeY-1][curNodeX].cost;
   }
-  if(!(walls && 1) && maze[curNodeY][curNodeX+1].cost < tempCost && curNodeX < mapSize-1) {
+  if(!(walls && 1) && maze[curNodeY][curNodeX+1].cost < tempCost && curNodeX < MAPSIZE-1) {
     next_dir = EAST;
     tempCost = maze[curNodeY][curNodeX+1].cost;
   }
-  if(!(walls && 2) && maze[curNodeY+1][curNodeX].cost < tempCost && curNodeY < mapSize-1) {
+  if(!(walls && 2) && maze[curNodeY+1][curNodeX].cost < tempCost && curNodeY < MAPSIZE-1) {
     next_dir = SOUTH;
     tempCost = maze[curNodeY+1][curNodeX].cost;
   }
