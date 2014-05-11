@@ -9,7 +9,7 @@
 #define RIGHT_SENSOR sensorVal[4]
 #define BACK_SENSOR sensorVal[6]
 #define FRONT_SENSOR sensorVal[0]
-#define SENSOR_HIGH                                                    /*determine this value*/
+#define SENSOR_HIGH 800                                                /*determine this value*/
 
 extern volatile int encoder0, encoder5, encoder6, encoder7;
 
@@ -83,7 +83,6 @@ int main() {
     oldDist = encoder0;
     // Calculate Distance and determine current square
     tempDist = encoder0;                                    /*average of 2 wheels encoders*/
-    encoderReset(RST_ALL_ENC);
     // addDist may be needed
     addDist(tempDist);
     curNodeX = botDistX / STEP_LENGTH;
