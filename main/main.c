@@ -53,7 +53,7 @@ int curNodeX=0, curNodeY=0;
 enum Direction {
   NORTH = 0, EAST, SOUTH, WEST};
 // Great for easy calculations of cost.
-Direction direct = NORTH;
+Direction next_dir = NORTH;
 Direction past_dir = NORTH;
 // Constants
 const int tileSize = 18; // change to 18 for centimeters
@@ -119,13 +119,13 @@ int main() {
 //Add distance traveled since last loop iteration based on current direction
 void addDist(int dist) {
   // Serial.println("Entering addDist()");
-  if(direct==NORTH) {
+  if(next_dir==NORTH) {
     botDistY -= dist;
   }
-  else if(direct==SOUTH) {
+  else if(next_dir==SOUTH) {
     botDistY += dist;
   }
-  else if(direct==EAST) {
+  else if(next_dir==EAST) {
     botDistX += dist;
   }
   else
@@ -202,29 +202,38 @@ void getNextDirection() {
   char walls = maze[curNodeY][curNodeX].walls;
   // set it to Mapsize * map size
   int tempCost = 1000;
-  past_dir = direct;
+  past_dir = next_dir;
   if(!(walls && 0) && curNodeY > 0) {
-    direct = NORTH;
+    next_dir = NORTH;
     tempCost = maze[curNodeY-1][curNodeX].cost;
   }
   if(!(walls && 1) && maze[curNodeY][curNodeX+1].cost < tempCost && curNodeX < mapSize-1) {
-    direct = EAST;
+    next_dir = EAST;
     tempCost = maze[curNodeY][curNodeX+1].cost;
   }
   if(!(walls && 2) && maze[curNodeY+1][curNodeX].cost < tempCost && curNodeY < mapSize-1) {
-    direct = SOUTH;
+    next_dir = SOUTH;
     tempCost = maze[curNodeY+1][curNodeX].cost;
   }
   if(!(walls && 3) && maze[curNodeY][curNodeX-1].cost < tempCost && curNodeX > 0) {
-    direct = WEST;
+    next_dir = WEST;
     tempCost = maze[curNodeY][curNodeX-1].cost;
   }
 }
 
 //once a direction is given, need to move robot in real life
 void move() {
-  if(
-
+  if(next_dir == past_dir) {
+    forward();
+  } else if(next_dir == (past_dir + 1)) {
+    backUpOneNode();
+    right90();
+  } else if(next_dir == (past_dir + 2)) {
+    backUpOneNode();
+  } else {
+    backUpOneNode();
+    left90();
+  }
 
 }
 
