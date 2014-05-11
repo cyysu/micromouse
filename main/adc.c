@@ -22,8 +22,6 @@ int conv_int(int input) {
       return 5;
    else if(input == 0x40)
       return 6;
-   else if(input == 0x80)
-      return 7;
    else
       return -1;
 }

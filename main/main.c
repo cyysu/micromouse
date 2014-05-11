@@ -1,6 +1,4 @@
 #include <msp430.h>
-#include <stdio.h>
-#include <math.h>
 #include "micromouse.h"
 
 #define min_dist(i,j) min(min(abs(i-center)+abs(j-center),abs(i-center+1)+abs(j-center)),min(abs(i-center)+abs(j-center+1),abs(i-center+1)+abs(j-center+1)));
@@ -16,7 +14,7 @@ extern volatile int encoder0, encoder5, encoder6, encoder7;
 
 int abs(int input) {
   if (input < 0) {
-    input = -input
+    input = -input;
   }
   return input;
 }
@@ -25,6 +23,13 @@ struct Node {
   char walls;
   char cost;
 };
+
+int min(int first, int second) {
+  if(first > second) {
+    return second;
+  }
+  return first;
+}
 
 //Search
 char TO_CENTER = 1;
@@ -81,7 +86,6 @@ int main() {
 
     //Check for maze completion
     if(TO_CENTER && inCenter(curNodeX,curNodeY)) {
-      progTime = 0;
       TO_START = 1;
       TO_CENTER = 0;
       for(int i=0; i<MAPSIZE; i++) {
@@ -94,7 +98,6 @@ int main() {
     }
     //Check for return trip
     else if(TO_START && curNodeX == 0 && curNodeY == 0) {
-      progTime = 0;
       TO_START = 0;
       TO_CENTER = 1;
       for(int i=0; i < MAPSIZE; i++) {
@@ -243,13 +246,6 @@ char inCenter(int x, int y) {
     return 1;
   }
   return 0;
-}
-
-int min(int first, int second) {
-  if(first > second) {
-    return second;
-  }
-  return first;
 }
 
 //interrupts for motor pwm

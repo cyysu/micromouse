@@ -1,7 +1,5 @@
 #ifndef MICROMOUSE_H
 #define MICROMOUSE_H
-#include <math.h>
-#include <msp430.h>
 
 //declaring global variables
 extern volatile int sensorVal[8];          //global variable storing sensor values
