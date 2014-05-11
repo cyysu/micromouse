@@ -72,7 +72,7 @@ int main() {
     }
   }
   for(;;) {
-    // Calculate Distance and determine current square      /*change to encoders*/
+    // Calculate Distance and determine current square
     tempDist = encoder0;                                    /*average of 2 wheels encoders*/
     encoderReset(RST_ALL_ENC);
     // addDist may be needed
@@ -118,7 +118,6 @@ int main() {
 
 //Add distance traveled since last loop iteration based on current direction
 void addDist(int dist) {
-  // Serial.println("Entering addDist()");
   if(next_dir==NORTH) {
     botDistY -= dist;
   }
