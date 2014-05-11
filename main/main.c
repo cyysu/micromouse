@@ -225,10 +225,10 @@ void getNextDirection() {
 void move() {
   if(next_dir == past_dir) {
     forward();
-  } else if(next_dir == (past_dir + 1)) {
+  } else if(next_dir == (past_dir + 1) || next_dir == (past_dir - 3)) {
     backUpOneNode();
     right90();
-  } else if(next_dir == (past_dir + 2)) {
+  } else if(next_dir == (past_dir + 2) || next_dir == (past_dir - 2)) {
     backUpOneNode();
   } else {
     backUpOneNode();
