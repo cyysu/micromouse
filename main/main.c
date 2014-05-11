@@ -11,7 +11,7 @@
 #define FRONT_SENSOR sensorVal[0]
 #define SENSOR_HIGH 800                                                /*determine this value*/
 
-// extern volatile int encoder0, encoder5, encoder6, encoder7;
+extern volatile int encoder0, encoder5, encoder6, encoder7;
 
 struct Node {
   char walls;
@@ -27,25 +27,6 @@ const char mapSize = 16;
 char center = 8;
 Node maze[mapSize][mapSize];
 
-// Get sensor data here.
-/*const char discoWalls[mapSize][mapSize] = {
-  11,11,11,9,5,5,5,5,5,5,5,5,5,5,5,3,
-  10,10,8,2,9,5,5,5,5,5,5,5,5,5,5,2,
-  12,0,2,10,10,13,5,5,3,9,5,5,5,5,3,10,
-  9,6,10,10,10,9,5,5,0,4,9,5,5,5,2,10,
-  8,5,6,10,10,8,5,1,4,3,12,5,5,3,10,10,
-  8,5,5,6,10,10,9,4,7,14,9,5,5,6,10,10,
-  10,9,5,5,6,8,0,7,9,3,12,5,5,3,10,10,
-  10,8,5,5,5,6,14,9,2,8,5,5,5,6,14,14,
-  10,10,9,5,5,3,11,9,6,8,1,5,1,5,1,3,
-  10,12,4,5,3,10,8,5,5,6,12,1,0,5,2,10,
-  8,5,5,3,10,10,12,5,5,5,5,6,12,5,2,10,
-  8,5,3,10,10,10,9,5,5,5,5,5,5,5,4,2,
-  9,3,10,10,10,10,12,5,5,5,5,5,5,5,3,10,
-  9,0,2,10,10,12,5,5,5,5,5,5,5,5,6,14,
-  10,10,8,2,12,5,5,5,5,5,5,5,5,5,5,3,
-  14,14,14,12,5,5,5,5,5,5,5,5,5,5,5,6};
-*/
 // Distance
 // Ignore times due to having encoder.
 // Encoder can just give the amount of time running.
@@ -65,7 +46,6 @@ const int tileSize = 18; // change to 18 for centimeters
 int main() {
   adc_init();
   motorInit();
-  encoderReset(RST_ALL_ENC);
   encoderInit();
 
   int oldDist;
@@ -211,7 +191,6 @@ void updateCosts() {
 
 // The lowest cost square is determined by using wall data for the current square.
 void getNextDirection() {
-  Node tempNode = maze[curNodeY][curNodeX];
   char walls = maze[curNodeY][curNodeX].walls;
   // set it to Mapsize * map size
   int tempCost = 1000;
