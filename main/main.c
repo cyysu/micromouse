@@ -78,18 +78,15 @@ int main() {
     }
   }
   for(;;) {
-<<<<<<< HEAD
     // Calculate Distance and determine current square      /*change to encoders*/
     tempDist = encoder0 - oldDist;                          /*average of 2 wheels encoders*/
     oldDist = encoder0;
-=======
     // Calculate Distance and determine current square
     tempDist = encoder0;                                    /*average of 2 wheels encoders*/
     encoderReset(RST_ALL_ENC);
->>>>>>> 7826535ec4cdd3c9ebf966e852686b07a362b5d2
     // addDist may be needed
     addDist(tempDist);
-    cu717 SRrNodeX = botDistX / STEP_LENGTH;
+    curNodeX = botDistX / STEP_LENGTH;
     curNodeY = botDistY / STEP_LENGTH;
 
     // Get wall information and update node costs
@@ -143,18 +140,20 @@ void addDist(int dist) {
 }
 
 char getWalls(Node node) {                                 /*use sensors here*/
-  char temp = 0;
-
-  if (FRONT_SENSOR >= SENSOR_HIGH) {
-    temp += (1 << past_dir);
+  char temp = 0x0;
+  if(FRONT_SENSOR >= SENSOR_HIGH) {
+    temp |= BIT0;
   }
-  if (LEFT_SENSOR >= SENSOR_HIGH) {
-    temp += (1 >> past_dir);
+  if(RIGHT_SENSOR >= SENSOR_HIGH) {
+    temp |= BIT1;
   }
-  if (RIGHT_SENSOR >= SENSOR_HIGH) {
-    temp += (2 << past_dir);
+  if(BACK_SENSOR >= SENSOR_HIGH) {
+    temp |= BIT2;
   }
-  node.walls = temp
+  if(LEFT_SENSOR >= SENSOR_HIGH) {
+    temp |= BIT3;
+  }
+  node.walls = temp >> next_dir;
   return node.walls;
 }
 
