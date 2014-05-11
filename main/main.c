@@ -64,6 +64,8 @@ int main() {
   encoderReset(RST_ALL_ENC);
   encoderInit();
 
+  int oldDist;
+
   for(int i=0; i<mapSize; i++) {
     for(int j=0; j<mapSize; j++) {
       // reference all the costs with respect to center.
@@ -73,8 +75,8 @@ int main() {
   }
   for(;;) {
     // Calculate Distance and determine current square      /*change to encoders*/
-    tempDist = encoder0;                                    /*average of 2 wheels encoders*/
-    encoderReset(RST_ALL_ENC);
+    tempDist = encoder0 - oldDist;                          /*average of 2 wheels encoders*/
+    oldDist = encoder0;
     // addDist may be needed
     addDist(tempDist);
     curNodeX = botDistX / STEP_LENGTH;
