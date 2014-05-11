@@ -41,7 +41,8 @@ void encoderReset(int encoderBit);
 void addDist(int dist);
 char getWalls();
 void updateCosts();
-void getNextDirection(); 
+void getNextDirection();
+void move(); 
 char inCenter(int x, int y);
 
 #endif

@@ -54,7 +54,7 @@ enum Direction {
   NORTH = 0, EAST, SOUTH, WEST};
 // Great for easy calculations of cost.
 Direction direct = NORTH;
-
+Direction past_dir = NORTH;
 // Constants
 const int tileSize = 18; // change to 18 for centimeters
 
@@ -85,6 +85,7 @@ int main() {
     maze[curNodeY][curNodeX].walls=discoWalls[curNodeY][curNodeX];
     updateCosts();
     getNextDirection();
+    move();
 
     //Check for maze completion
     if(TO_CENTER && inCenter(curNodeX,curNodeY)) {
@@ -201,6 +202,7 @@ void getNextDirection() {
   char walls = maze[curNodeY][curNodeX].walls;
   // set it to Mapsize * map size
   int tempCost = 1000;
+  past_dir = direct;
   if(!(walls && 0) && curNodeY > 0) {
     direct = NORTH;
     tempCost = maze[curNodeY-1][curNodeX].cost;
@@ -217,6 +219,13 @@ void getNextDirection() {
     direct = WEST;
     tempCost = maze[curNodeY][curNodeX-1].cost;
   }
+}
+
+//once a direction is given, need to move robot in real life
+void move() {
+  if(
+
+
 }
 
 // Checks to see if current square is at the center of the maze.
