@@ -25,7 +25,7 @@ char TO_START = 0;
 //Map
 const char mapSize = 16;
 char center = 8;
-Node maze[mapSize][mapSize];
+struct Node maze[mapSize][mapSize];
 
 // Distance
 // Ignore times due to having encoder.
@@ -116,7 +116,7 @@ void addDist(int dist) {
     botDistX -= dist;
 }
 
-void getWalls(Node node) {                                 /*use sensors here*/
+void getWalls(struct Node node) {                                 /*use sensors here*/
   char temp = 0x0;
   if(FRONT_SENSOR >= SENSOR_HIGH) {
     temp |= BIT0;
