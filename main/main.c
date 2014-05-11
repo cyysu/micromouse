@@ -5,6 +5,11 @@
 
 #define min_dist(i,j) min(min(abs(i-center)+abs(j-center),abs(i-center+1)+abs(j-center)),min(abs(i-center)+abs(j-center+1),abs(i-center+1)+abs(j-center+1)));
 #define STEP_LENGTH 110
+#define LEFT_SENSOR sensorVal[1]
+#define RIGHT_SENSOR sensorVal[4]
+#define BACK_SENSOR sensorVal[6]
+#define FRONT_SENSOR sensorVal[0]
+#define SENSOR_HIGH                                                    /*determine this value*/
 
 extern volatile int encoder0, encoder5, encoder6, encoder7;
 
@@ -73,17 +78,22 @@ int main() {
     }
   }
   for(;;) {
+<<<<<<< HEAD
     // Calculate Distance and determine current square      /*change to encoders*/
     tempDist = encoder0 - oldDist;                          /*average of 2 wheels encoders*/
     oldDist = encoder0;
+=======
+    // Calculate Distance and determine current square
+    tempDist = encoder0;                                    /*average of 2 wheels encoders*/
+    encoderReset(RST_ALL_ENC);
+>>>>>>> 7826535ec4cdd3c9ebf966e852686b07a362b5d2
     // addDist may be needed
     addDist(tempDist);
-    curNodeX = botDistX / STEP_LENGTH;
+    cu717 SRrNodeX = botDistX / STEP_LENGTH;
     curNodeY = botDistY / STEP_LENGTH;
 
     // Get wall information and update node costs
-    // Use sensor black magic here.                     /*add sensor stuff here*/
-    maze[curNodeY][curNodeX].walls=discoWalls[curNodeY][curNodeX];
+    getWalls(maze[i][j]);
     updateCosts();
     getNextDirection();
     move();
@@ -119,7 +129,6 @@ int main() {
 
 //Add distance traveled since last loop iteration based on current direction
 void addDist(int dist) {
-  // Serial.println("Entering addDist()");
   if(next_dir==NORTH) {
     botDistY -= dist;
   }
@@ -133,12 +142,20 @@ void addDist(int dist) {
     botDistX -= dist;
 }
 
-char getWalls() {                                 /*use sensors here*/
-  // Will become useful with advent of sensors.
-  // Serial.println("Entering getWalls()");
-  // Serial.println("Exiting getWalls()");
-  // Serial.println();
-  return 00000000;
+char getWalls(Node node) {                                 /*use sensors here*/
+  char temp = 0;
+
+  if (FRONT_SENSOR >= SENSOR_HIGH) {
+    temp += (1 << past_dir);
+  }
+  if (LEFT_SENSOR >= SENSOR_HIGH) {
+    temp += (1 >> past_dir);
+  }
+  if (RIGHT_SENSOR >= SENSOR_HIGH) {
+    temp += (2 << past_dir);
+  }
+  node.walls = temp
+  return node.walls;
 }
 
 //Iterate through each square until all squares have at least one square of lower value adjacent to them.
