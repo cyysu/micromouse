@@ -38,8 +38,8 @@ int curNodeX=0, curNodeY=0;
 enum Direction {
   NORTH = 0, EAST, SOUTH, WEST};
 // Great for easy calculations of cost.
-Direction next_dir = NORTH;
-Direction past_dir = NORTH;
+enum Direction next_dir = NORTH;
+enum Direction past_dir = NORTH;
 // Constants
 const int tileSize = 18; // change to 18 for centimeters
 
