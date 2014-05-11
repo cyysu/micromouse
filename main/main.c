@@ -245,6 +245,13 @@ char inCenter(int x, int y) {
   return 0;
 }
 
+int min(int first, int second) {
+  if(first > second) {
+    return second;
+  }
+  return first;
+}
+
 //interrupts for motor pwm
 #pragma vector=TIMER0_A0_VECTOR
 __interrupt void ccr0_clear_pulse (void) {
