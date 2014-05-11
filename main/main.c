@@ -139,7 +139,7 @@ void addDist(int dist) {
     botDistX -= dist;
 }
 
-char getWalls(Node node) {                                 /*use sensors here*/
+void getWalls(Node node) {                                 /*use sensors here*/
   char temp = 0x0;
   if(FRONT_SENSOR >= SENSOR_HIGH) {
     temp |= BIT0;
@@ -153,8 +153,7 @@ char getWalls(Node node) {                                 /*use sensors here*/
   if(LEFT_SENSOR >= SENSOR_HIGH) {
     temp |= BIT3;
   }
-  node.walls = temp >> next_dir;
-  return node.walls;
+  node.walls = (temp >> next_dir) + (temp << (4 - next_dir));
 }
 
 //Iterate through each square until all squares have at least one square of lower value adjacent to them.
