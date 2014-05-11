@@ -36,11 +36,11 @@ void backUpOneNode();                      // I MOVE BACK ONE NODE;
 
 //function prototypes for encoder
 void encoderInit();
-void encoderReset(int encoderBit);
+void encoderReset(int encoderBit);         // ENC0, ENC5, ENC6, ENC7 
 
 //function prototypes for floodfill
 void addDist(int dist);
-char getWalls();
+void getWalls();
 void updateCosts();
 void getNextDirection();
 void move(); 
