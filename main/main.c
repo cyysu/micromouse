@@ -81,8 +81,6 @@ int main() {
     // Calculate Distance and determine current square      /*change to encoders*/
     tempDist = encoder0 - oldDist;                          /*average of 2 wheels encoders*/
     oldDist = encoder0;
-    // Calculate Distance and determine current square
-    tempDist = encoder0;                                    /*average of 2 wheels encoders*/
     // addDist may be needed
     addDist(tempDist);
     curNodeX = botDistX / STEP_LENGTH;
