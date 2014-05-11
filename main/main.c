@@ -11,7 +11,7 @@
 #define FRONT_SENSOR sensorVal[0]
 #define SENSOR_HIGH 800                                                /*determine this value*/
 
-extern volatile int encoder0, encoder5, encoder6, encoder7;
+// extern volatile int encoder0, encoder5, encoder6, encoder7;
 
 struct Node {
   char walls;

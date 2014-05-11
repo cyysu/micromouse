@@ -29,9 +29,10 @@ void left90();                             // turn profile, test me
 void right90();                            // turn profile, test me
 void left45();                             // turn profile, not written yet
 void right45();                            // turn profile, not written yet
-void clockInit();                          // always use me before timerA0Init
-void timerA0Init();                        // make sure to init the timer!
-void motorInit();                          // i'm just the two above, in order!!
+void clockInit();                          // do not use
+void timerA0Init();                        // do not use
+void motorInit();                          // USE ME TO INIT!!!
+void backUpOneNode();                      // I MOVE BACK ONE NODE;
 
 //function prototypes for encoder
 void encoderInit();
