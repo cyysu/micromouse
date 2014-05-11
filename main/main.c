@@ -14,6 +14,13 @@
 
 extern volatile int encoder0, encoder5, encoder6, encoder7;
 
+int abs(int input) {
+  if (input < 0) {
+    input = -input
+  }
+  return input;
+}
+
 struct Node {
   char walls;
   char cost;
