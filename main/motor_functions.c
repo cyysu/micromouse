@@ -5,6 +5,8 @@
 #define HALF_PERIOD 15000   // DO NOT TOUCH ME!!! (I AM AT 15000)
 #define FAST_CALIB 400
 
+extern volatile int encoder5;
+
 void onlyRight() {
   TA0CCR1 = 2000;
   TA0CCR2 = HALF_PERIOD*2 + 10;
@@ -13,11 +15,11 @@ void onlyLeft() {
   TA0CCR1 = HALF_PERIOD*2 + 10;
   TA0CCR2 = 2000;
 }
-void moveRight() {
+void moveRight() { //me!!
   TA0CCR1 = TURN_CONST;
   TA0CCR2 = HALF_PERIOD + 100;
 }
-void moveLeft() {
+void moveLeft() { //me!!
   TA0CCR1 = HALF_PERIOD + 100;
   TA0CCR2 = TURN_CONST;
 }
@@ -46,19 +48,19 @@ void torque() {
   TA0CCR1 = HALF_PERIOD/3000;
   TA0CCR2 = HALF_PERIOD/3000 + 10;
 }
-void invertHigh() {
+void invertForward() {
   P1OUT |= BIT3;
 }
-void invertLow() {
+void invertBackward() {
   P1OUT &= ~BIT3;
 }
-void left90() {
+void left90() { //me!
   moveLeft();
   __delay_cycles(7500000);
   stop();
   __delay_cycles(32000000);
 }
-void right90() {
+void right90() { //me!
   moveRight();
   __delay_cycles(7500000);
   stop();
@@ -92,10 +94,17 @@ void timerA0Init() {
 
   __bis_SR_register(GIE);
 
-  invertHigh();
+  invertForward();
 }
 void motorInit() {
   clockInit();
   timerA0Init();
   __delay_cycles(32000);         // to allow motor to init
+}
+void backUpOneNode() {
+  int temp = encoder5;
+  invertBackward();
+  forward();
+  while((encoder5 - temp) <= 110);
+  invertForward();
 }

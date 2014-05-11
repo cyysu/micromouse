@@ -44,8 +44,7 @@ Node maze[mapSize][mapSize];
 // Distance
 // Ignore times due to having encoder.
 // Encoder can just give the amount of time running.
-unsigned long curTime=0;
-int motorSpeed=50, tempDist=0; // delta distance
+int tempDist=0; // delta distance
 int botDistX=0, botDistY=300; // may use struct
 int curNodeX=0, curNodeY=0;
 
