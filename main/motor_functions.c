@@ -7,14 +7,14 @@
 
 extern volatile int encoder5;
 
-void onlyRight() {
-  TA0CCR1 = 2000;
-  TA0CCR2 = HALF_PERIOD*2 + 10;
-}
-void onlyLeft() {
-  TA0CCR1 = HALF_PERIOD*2 + 10;
-  TA0CCR2 = 2000;
-}
+//void onlyRight() {
+  //TA0CCR1 = 2000;
+  // TA0CCR2 = HALF_PERIOD*2 + 10;
+  //}
+//void onlyLeft() {
+//TA0CCR1 = HALF_PERIOD*2 + 10;
+//  TA0CCR2 = 2000;
+//}
 void moveRight() { //me!!
   TA0CCR1 = TURN_CONST;
   TA0CCR2 = HALF_PERIOD + 100;
@@ -31,19 +31,19 @@ void stop() {
   TA0CCR1 = HALF_PERIOD * 2 + 10;  // CCR1 > CCR0, never on
   TA0CCR2 = HALF_PERIOD * 2 + 10;  // CCR2 > CCR0, never on
 }
-void easeStop() {
-  slow();
-  __delay_cycles(2000000);
-  stop();
-}
-void slow() {
-  TA0CCR1 = HALF_PERIOD + HALF_PERIOD/2;
-  TA0CCR2 = HALF_PERIOD + HALF_PERIOD/2;
-}
-void fast() {
-  TA0CCR1 = HALF_PERIOD - 2000 - FAST_CALIB;
-  TA0CCR2 = HALF_PERIOD - 2000;
-}
+//void easeStop() {
+ // slow();
+//  __delay_cycles(2000000);
+// stop();
+//}
+//void slow() {
+  //TA0CCR1 = HALF_PERIOD + HALF_PERIOD/2;
+  // TA0CCR2 = HALF_PERIOD + HALF_PERIOD/2;
+  //}
+//void fast() {
+// TA0CCR1 = HALF_PERIOD - 2000 - FAST_CALIB;
+//  TA0CCR2 = HALF_PERIOD - 2000;
+//}
 void torque() {
   TA0CCR1 = HALF_PERIOD/3000;
   TA0CCR2 = HALF_PERIOD/3000 + 10;
@@ -66,12 +66,12 @@ void right90() { //me!
   stop();
   __delay_cycles(32000000);
 }
-void left45() {
+//void left45() {
 
-}
-void right45() {
+//}
+//void right45() {
 
-}
+//}
 void clockInit() {
   BCSCTL1 = CALBC1_16MHZ;
   DCOCTL = CALDCO_16MHZ;
