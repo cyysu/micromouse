@@ -13,7 +13,7 @@
 
 // extern volatile int encoder0, encoder5, encoder6, encoder7;
 
-typedef struct Node {
+struct Node {
   char walls;
   char cost;
 };
@@ -24,8 +24,7 @@ char TO_START = 0;
 
 //Map
 const char mapSize = 16;
-char center;
-center = mapSize/2;
+char center = 8;
 Node maze[mapSize][mapSize];
 
 // Get sensor data here.
