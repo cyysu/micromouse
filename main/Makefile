@@ -1,5 +1,5 @@
 CC=msp430-gcc
-CFLAGS=-Wall -mmcu=msp430g2553 -mdisable-watchdog
+CFLAGS=-Wall -std=c99 -mmcu=msp430g2553 -mdisable-watchdog
 SRCS=$(wildcard *.c)
 OBJS=$(SRCS:%.c=%.out)
 
