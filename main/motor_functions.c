@@ -15,11 +15,11 @@ void onlyLeft() {
   TA0CCR1 = HALF_PERIOD*2 + 10;
   TA0CCR2 = 2000;
 }
-void moveRight() {
+void moveRight() { //me!!
   TA0CCR1 = TURN_CONST;
   TA0CCR2 = HALF_PERIOD + 100;
 }
-void moveLeft() {
+void moveLeft() { //me!!
   TA0CCR1 = HALF_PERIOD + 100;
   TA0CCR2 = TURN_CONST;
 }
@@ -54,13 +54,13 @@ void invertForward() {
 void invertBackward() {
   P1OUT &= ~BIT3;
 }
-void left90() {
+void left90() { //me!
   moveLeft();
   __delay_cycles(7500000);
   stop();
   __delay_cycles(32000000);
 }
-void right90() {
+void right90() { //me!
   moveRight();
   __delay_cycles(7500000);
   stop();
